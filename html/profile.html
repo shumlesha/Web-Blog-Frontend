@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Профиль</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../css/registration.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand navbar-light bg-white border-bottom shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Блог №415</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Главная</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/">Написать пост</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <form id="profileForm" class="form-horizontal">
+                        <div class="form-group row">
+                            <label for="profileEmail" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="profileEmail" placeholder="name@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="profileFullName" class="col-sm-3 col-form-label">ФИО</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="profileFullName" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="profilePhone" class="col-sm-3 col-form-label">Номер телефона</label>
+                            <div class="col-sm-9">
+                                <input type="tel" class="form-control" id="profilePhone" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="profileGender" class="col-sm-3 col-form-label">Пол</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="profileGender">
+                                    <option value="male">Мужчина</option>
+                                    <option value="female">Женщина</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="profileBirthDate" class="col-sm-3 col-form-label">Дата рождения</label>
+                            <div class="col-sm-9">
+                                <input type="date" class="form-control" id="profileBirthDate" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-9 text-right">
+                                <button type="submit" class="btn btn-primary">Сохранить</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer class="bg-light text-muted py-3 fixed-bottom">
+    <div class="container">
+        &copy; 2022 - Блог №415
+    </div>
+</footer>
+
+
+
+<script src="../js/profile.js"></script>
+</body>
+</html>

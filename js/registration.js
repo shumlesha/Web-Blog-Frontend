@@ -6,7 +6,7 @@ $(document).ready(function() {
         var formData = {
             fullName: $('#inputFullName').val(),
             birthDate: $('#inputBirthDate').val(),
-            gender: $('#inputGender').val() == "Мужчина"? "Male": "Female",
+            gender: $('#inputGender').val() === "male"? "Male": "Female",
             phoneNumber: $('#inputPhone').val(),
             email: $('#inputEmail').val(),
             password: $('#inputPassword').val()

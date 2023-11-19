@@ -24,7 +24,7 @@ $(document).ready(function() {
                         ${email}
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/profile">Профиль</a>
+                        <a class="dropdown-item" href="../html/profile.html">Профиль</a>
                         <a class="dropdown-item" href="#" id="logoutButton">Выход</a>
                       </div>
                     </li>
