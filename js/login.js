@@ -43,4 +43,15 @@ $(document).ready(function() {
             }
         });
     });
+    $('#registerButton').on('click', function() {
+        var email = $('#inputEmail').val();
+        var password = $('#inputPassword').val();
+
+
+        localStorage.setItem('emailForRegistration', email);
+        localStorage.setItem('passwordForRegistration', password);
+
+        window.location.href = '../html/registration.html';
+    });
+
 });
