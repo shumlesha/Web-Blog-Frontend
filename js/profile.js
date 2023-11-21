@@ -14,7 +14,7 @@ $(document).ready(function() {
             contentType: 'application/json',
             data: JSON.stringify(formData),
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+                'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
             },
             success: function(response) {
             },
@@ -33,7 +33,7 @@ function fillFields() {
         method: 'GET',
         contentType: 'application/json',
         headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+            'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
         },
         success: function(response) {
 
@@ -56,7 +56,7 @@ function fillFields() {
 
             $('.navbar-nav.ml-auto').html(userDropdown);
             $('#logoutButton').on('click', function() {
-                localStorage.removeItem('authToken');
+                localStorage.removeItem('bearerToken');
                 location.reload();
             });
         },

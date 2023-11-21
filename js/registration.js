@@ -18,7 +18,7 @@ $(document).ready(function() {
             data: JSON.stringify(formData),
             success: function(response) {
                 var token = response.token;
-                localStorage.setItem('authToken', token);
+                localStorage.setItem('bearerToken', token);
 
             },
             error: function(xhr, status, error) {

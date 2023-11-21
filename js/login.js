@@ -15,7 +15,7 @@ $(document).ready(function() {
             }),
             success: function(response) {
                 var token = response.token;
-                localStorage.setItem('authToken', token);
+                localStorage.setItem('bearerToken', token);
 
 
                 var userDropdown = `
@@ -34,7 +34,7 @@ $(document).ready(function() {
 
 
                 $('#logoutButton').on('click', function() {
-                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('bearerToken');
                     location.reload();
                 });
             },
