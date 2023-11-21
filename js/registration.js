@@ -22,7 +22,15 @@ $(document).ready(function() {
 
             },
             error: function(xhr, status, error) {
-                alert("Ошибка!");
+                var toJson = JSON.parse(xhr.responseText);
+                if (toJson.errors) {
+                    toJson = toJson.errors;
+                }
+                var errorText = Object.keys(toJson).map(function (key) {
+                    var errors = toJson[key];
+                    return key + ": " + errors.join(", ");
+                }).join("\n");
+                alert(errorText);
             }
         });
     });
