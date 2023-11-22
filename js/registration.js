@@ -26,10 +26,23 @@ $(document).ready(function() {
                 if (toJson.errors) {
                     toJson = toJson.errors;
                 }
+
                 var errorText = Object.keys(toJson).map(function (key) {
                     var errors = toJson[key];
-                    return key + ": " + errors.join(", ");
-                }).join("\n");
+                    //return key + ": " + errors.join(", ");
+                    if (errors == null){
+                        return "";
+                    }
+                    else {
+                        if (Array.isArray(errors)) {
+                            return `key: ${errors.join(", ")}`;
+                        }
+                        else{
+                            return `key: ${errors}`;
+                        }
+
+                    }
+                }).join("\n").trim();
                 alert(errorText);
             }
         });
