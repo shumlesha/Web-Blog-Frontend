@@ -24,7 +24,7 @@ $(document).ready(function() {
                         ${email}
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="../html/profile.html">Профиль</a>
+                        <a class="dropdown-item" href="http://localhost/profile">Профиль</a>
                         <a class="dropdown-item" href="#" id="logoutButton">Выход</a>
                       </div>
                     </li>
@@ -65,14 +65,7 @@ $(document).ready(function() {
         });
     });
     $('#registerButton').on('click', function() {
-        var email = $('#inputEmail').val();
-        var password = $('#inputPassword').val();
-
-
-        localStorage.setItem('emailForRegistration', email);
-        localStorage.setItem('passwordForRegistration', password);
-
-        window.location.href = '../html/registration.html';
+        window.location.href = 'http://localhost/registration';
     });
 
 });
@@ -86,8 +79,8 @@ function replaceNav() {
                         ${email}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="../html/profile.html">Профиль</a>
-                        <a class="dropdown-item" href="../html/login.html" id="logoutButton">Выход</a>
+                        <a class="dropdown-item" href="http://localhost/profile">Профиль</a>
+                        <a class="dropdown-item" href="http://localhost/login" id="logoutButton">Выход</a>
                     </div>
                 </li>
             `;

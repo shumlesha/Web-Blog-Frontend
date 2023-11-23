@@ -19,7 +19,7 @@
         <a class="navbar-brand" href="/">Блог №415</a>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/">Главная</a>
+                <a class="nav-link" href="http://localhost/">Главная</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/">Авторы</a>
@@ -30,7 +30,7 @@
         </ul>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/login/">Вход</a>
+                <a class="nav-link" href="http://localhost/login">Вход</a>
             </li>
         </ul>
     </div>
@@ -94,7 +94,7 @@
                 </div>
 
                 <div class="col-md-auto">
-                    <button type="submit" class="btn btn-primary">Применить</button>
+                    <button type="submit" class="btn btn-primary" id="apply-filters">Применить</button>
                 </div>
             </div>
         </div>
@@ -104,35 +104,8 @@
 
 <div class="container my-4">
     <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted mb-2">Нехр1е - 19.12.2022 17:15 в сообществе "Стажировка"</h6>
-                    <h4 class="card-title">Проблема с процессором</h4>
-                    <hr style="border-top: 1px solid #ccc8c8;">
-                    <p>Неисправен процессор.</p>
-                    <p class="card-text text-muted">#Стажировка</p>
-                    <p class="card-text">Время чтения: 1 мин.</p>
-                </div>
-                <div class="card-footer bg-light d-flex justify-content-between">
-                    <span>0 <i class="bi bi-chat-left-text me-2"></i></span>
-                    <span>0 <i class="bi bi-heart"></i></span>
-                </div>
-            </div>
-            <div class="card mt-4">
-                <div class="card-body">
-                    <h6 class="card-subtitle text-muted mb-2">Нехр1е - 19.12.2022 17:15 в сообществе "Стажировка"</h6>
-                    <h4 class="card-title">Проблема с процессором</h4>
-                    <hr style="border-top: 1px solid #ccc8c8;">
-                    <p>Неисправен процессор</p>
-                    <p class="card-text text-muted">#Стажировка</p>
-                    <p class="card-text">Время чтения: 1 мин.</p>
-                </div>
-                <div class="card-footer bg-light d-flex justify-content-between">
-                    <span>0 <i class="bi bi-chat-left-text me-2"></i></span>
-                    <span>0 <i class="bi bi-heart"></i></span>
-                </div>
-            </div>
+        <div class="col" id="postsCol">
+
         </div>
     </div>
 

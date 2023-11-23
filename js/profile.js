@@ -69,8 +69,8 @@ function fillFields() {
                         ${response.email}
                       </a>
                       <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="../html/profile.html">Профиль</a>
-                        <a class="dropdown-item" href="../html/login.html" id="logoutButton">Выход</a>
+                        <a class="dropdown-item" href="http://localhost/profile">Профиль</a>
+                        <a class="dropdown-item" href="http://localhost/login" id="logoutButton">Выход</a>
                       </div>
                     </li>
                   `;
