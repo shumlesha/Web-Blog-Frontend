@@ -121,8 +121,9 @@ function getEmail(callback) {
             callback(response.email);
         },
         error: function(xhr, status, error) {
-            console.error("Ошибка: ", status, error);
-            callback("");
+            if (xhr.status === 401){
+                window.location.href = 'http://localhost/login';
+            }
         }
     });
 }
