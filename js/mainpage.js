@@ -1,5 +1,6 @@
 $(document).ready(function() {
     replaceNav();
+    fillTags();
     $('#apply-filters').on('click', function(e) {
         e.preventDefault();
         var author = $('#authorSearch').val();
@@ -40,6 +41,7 @@ $(document).ready(function() {
             method: 'GET',
             contentType: 'application/json',
             data: queryParams,
+            traditional: true,
             success: function(data){
                 $.get('../html/postCard.html', function(cardPattern) {
                     var postsContainer = $('#postsCol');
@@ -141,3 +143,19 @@ $(document).on('click', '.hide-text', function(e) {
 
     //$(this).hide();
 })
+
+function  fillTags(){
+    $.ajax({
+        url: 'https://blog.kreosoft.space/api/tag',
+        method: 'GET',
+        contentType: 'application/json',
+        success: function(response) {
+            $.each(response, function(i, tag) {
+                $('#tagsSearch').append(`<option value="${tag.id}">${tag.name}</option>`);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Ошибка: ", status, error);
+        }
+    });
+}
