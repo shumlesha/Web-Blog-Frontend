@@ -10,6 +10,8 @@
     </div>
     <div class="card-footer bg-light d-flex justify-content-between">
         <span>{{commentsCount}} <i class="bi bi-chat-left-text me-2"></i></span>
-        <span>{{likes}} <i class="bi bi-heart"></i></span>
+        <span class="like-section" data-post-id="{{postId}}">
+            <span class="likes-count">{{likes}}</span> <i class="{{likeClass}} like-icon"></i>
+        </span>
     </div>
 </div>

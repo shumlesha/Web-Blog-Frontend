@@ -40,6 +40,59 @@ $(document).ready(function() {
         ParsePosts(queryParams);
 
     });
+    $('#postsCol').on('click', '.like-icon', function() {
+        //console.log("Clicked");
+        var postId = $(this).closest('.like-section').data('post-id');
+        var likeIcon = $(this);
+        var isLiked = likeIcon.hasClass('bi-heart-fill');
+
+        if (isLiked) {
+            $.ajax({
+                url: `https://blog.kreosoft.space/api/post/${postId}/like`,
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
+                },
+                success: function() {
+                    likeIcon.removeClass('bi-heart-fill').addClass('bi-heart');
+                    getPostInfo(postId, function(likes, error) {
+                        if (error) {
+                            console.error(error);
+                        } else {
+                            likeIcon.siblings('.likes-count').text(likes);
+                            //console.log(likes);
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Ошибка", status, error);
+                }
+            });
+        } else {
+            $.ajax({
+                url: `https://blog.kreosoft.space/api/post/${postId}/like`,
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
+                },
+                success: function() {
+                    likeIcon.removeClass('bi-heart').addClass('bi-heart-fill');
+                    getPostInfo(postId, function(likes, error) {
+                        if (error) {
+                            console.error(error);
+                        } else {
+                            likeIcon.siblings('.likes-count').text(likes);
+                            //console.log(likes);
+                            console.log(likeIcon.siblings('.likes-count').text());
+                        }
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Ошибка", status, error);
+                }
+            });
+        }
+    });
 });
 
 function replaceNav() {
@@ -115,7 +168,7 @@ $('.pagination a').click(function(e) {
 
     var queryParams = parseUrlOptions();
     var currentPage = queryParams.page || 1;
-    console.log(queryParams.tags);
+    //console.log(queryParams.tags);
 
     if ($(this).hasClass('prev')) {
         queryParams.page = Math.max(currentPage - 1, 1);
@@ -168,6 +221,9 @@ function ParsePosts(queryParams){
         contentType: 'application/json',
         data: queryParams,
         traditional: true,
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
+        },
         success: function(data){
             $.get('../html/postCard.html', function(cardPattern) {
                 var postsContainer = $('#postsCol');
@@ -196,7 +252,9 @@ function ParsePosts(queryParams){
                         .replace(/{{tags}}/g, tagsRepr)
                         .replace(/{{readingTime}}/g, post.readingTime)
                         .replace(/{{commentsCount}}/g, post.commentsCount)
-                        .replace(/{{likes}}/g, post.likes);
+                        .replace(/{{likes}}/g, post.likes)
+                        .replace(/{{postId}}/g, post.id)
+                        .replace(/{{likeClass}}/g, post.hasLike===true ? 'bi bi-heart-fill' : 'bi bi-heart');
 
                     postsContainer.append(card);
                 });
@@ -232,7 +290,7 @@ function reBuildPagination(current){
     var rangeSize = 3;
     var currentRangeStart = Math.floor((current - 1) / rangeSize) * rangeSize + 1;
 
-    console.log(currentRangeStart);
+    //console.log(currentRangeStart);
     $('.pagination .page-link').not('.prev, .next').each(function(index) {
         var pageNumber = currentRangeStart + index;
         $(this).data('page', pageNumber).text(pageNumber).parent().show();
@@ -244,4 +302,19 @@ function reBuildPagination(current){
     $('.pagination .prev').parent().toggleClass('disabled', current <= 1);
     $('.pagination .next').parent().toggleClass('disabled', current >= pagesCount);
 
+}
+
+function getPostInfo(postId, callback) {
+    $.ajax({
+        url: `https://blog.kreosoft.space/api/post/${postId}`,
+        method: 'GET',
+        contentType: 'application/json',
+        success: function(data) {
+            callback(data.likes);
+        },
+        error: function(xhr, status, error) {
+            console.error("Ошибка", status, error);
+            callback(null, error);
+        }
+    });
 }
