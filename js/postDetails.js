@@ -1,9 +1,9 @@
 $(document).ready(function() {
     replaceNav();
     var path = window.location.pathname;
-    var pathParts = path.split('/');
+    var pathParts = path.trim().split('/');
     var postId = pathParts[pathParts.length - 1];
-
+    console.log(postId);
     $.ajax({
         url: `https://blog.kreosoft.space/api/post/${postId}`,
         method: 'GET',
@@ -62,6 +62,7 @@ $(document).ready(function() {
             console.error("Ошибка", error);
         }
     });
+    parseComments(postId);
     $('#postsCol').on('click', '.like-icon', function() {
         //console.log("Clicked");
         var postId = $(this).closest('.like-section').data('post-id');
@@ -77,7 +78,7 @@ $(document).ready(function() {
                 },
                 success: function() {
                     likeIcon.removeClass('bi-heart-fill').addClass('bi-heart');
-                    getPostInfo(postId, function(likes, error) {
+                    getPostLikes(postId, function(likes, error) {
                         if (error) {
                             console.error(error);
                         } else {
@@ -99,13 +100,13 @@ $(document).ready(function() {
                 },
                 success: function() {
                     likeIcon.removeClass('bi-heart').addClass('bi-heart-fill');
-                    getPostInfo(postId, function(likes, error) {
+                    getPostLikes(postId, function(likes, error) {
                         if (error) {
                             console.error(error);
                         } else {
                             likeIcon.siblings('.likes-count').text(likes);
                             //console.log(likes);
-                            console.log(likeIcon.siblings('.likes-count').text());
+                            //console.log(likeIcon.siblings('.likes-count').text());
                         }
                     });
                 },
@@ -161,7 +162,7 @@ function getEmail(callback) {
     });
 }
 
-function getPostInfo(postId, callback) {
+function getPostLikes(postId, callback) {
     $.ajax({
         url: `https://blog.kreosoft.space/api/post/${postId}`,
         method: 'GET',
@@ -190,3 +191,69 @@ function getAddressChain(objectGuid, callback) {
         }
     });
 }
+
+function parseComments(postId) {
+    $.ajax({
+        url: `https://blog.kreosoft.space/api/post/${postId}`,
+        method: 'GET',
+        success: function(data) {
+            $.get('../html/commentCard.html', function(template) {
+                data.comments.forEach(function(comment) {
+                    var commentReplaced = $(template.replace('{{author}}', comment.author)
+                        .replace('{{content}}', comment.content)
+                        .replace('{{date}}', new Date(comment.createTime).toLocaleDateString())
+                        .replace('{{time}}', new Date(comment.createTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
+                        .replace('{{id}}', comment.id));
+                    if (comment.subComments > 0) {
+                        commentReplaced.find('.replies-container').after('<a href="#" class="text-primary show-replies">Раскрыть ответы</a>');
+                    }
+                    $('#comments-block').append(commentReplaced);
+                });
+            });
+        },
+        error: function(error) {
+            console.error("Ошибка", error);
+        }
+    });
+}
+
+function parseNestedComments(commentId, container){
+    $.ajax({
+        url: `https://blog.kreosoft.space/api/comment/${commentId}/tree`,
+        method: 'GET',
+        success: function(subComments) {
+            $.get('../html/commentCard.html', function(template) {
+                subComments.forEach(function(comment) {
+                    var commentReplaced = $(template.replace('{{author}}', comment.author)
+                        .replace('{{content}}', comment.content)
+                        .replace('{{date}}', new Date(comment.createTime).toLocaleDateString())
+                        .replace('{{time}}', new Date(comment.createTime).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}))
+                        .replace('{{id}}', comment.id));
+
+                    container.append(commentReplaced);
+                });
+            });
+        },
+        error: function(error) {
+            console.error("Ошибка", error);
+        }
+    });
+}
+
+$(document).on('click', '.show-replies', function(e) {
+    e.preventDefault();
+    var commentId = $(this).closest('.comment-item').data('comment-id');
+    var container = $(this).closest('.comment-item').find('.replies-container');
+
+
+    if (container.children().length === 0) {
+        $(this).text('Скрыть ответы');
+        parseNestedComments(commentId, container);
+    }
+    else{
+        $(this).text('Раскрыть ответы');
+        container.empty();
+    }
+
+});
+
