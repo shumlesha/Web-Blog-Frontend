@@ -26,6 +26,7 @@ $(document).ready(function() {
             console.error("Ошибка", status, error);
         }
     });
+
 })
 
 
@@ -97,3 +98,62 @@ function checkRole(communityId, card, callback) {
         }
     });
 }
+
+$(document).on('click', '.subscribe-btn', function(e) {
+    var communityId = $(this).data('community-id');
+    console.log('Подписка на ' + communityId);
+
+    var button = $(this);
+
+    $.ajax({
+        url: `https://blog.kreosoft.space/api/community/${communityId}/subscribe`,
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer '+ localStorage.getItem('bearerToken')
+        },
+        contentType: 'application/json',
+        success: function(response) {
+            var card = button.parent();
+            button.remove();
+
+            var buttonTemplateUrl = '../html/unsubButton.html';
+            $.get(buttonTemplateUrl, function(buttonPattern) {
+                var buttonRepr = buttonPattern.replace(/{{id}}/g, communityId);
+                $(card).append(buttonRepr);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Ошибка подписки: ", status, error);
+        }
+    });
+});
+
+$(document).on('click', '.unsubscribe-btn', function(e) {
+    var communityId = $(this).data('community-id');
+    console.log('Подписка на ' + communityId);
+
+    var button = $(this);
+
+    $.ajax({
+        url: `https://blog.kreosoft.space/api/community/${communityId}/unsubscribe`,
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer '+ localStorage.getItem('bearerToken')
+        },
+        contentType: 'application/json',
+        success: function(response) {
+            var card = button.parent();
+            button.remove();
+
+            var buttonTemplateUrl = '../html/subButton.html';
+            $.get(buttonTemplateUrl, function(buttonPattern) {
+                var buttonRepr = buttonPattern.replace(/{{id}}/g, communityId);
+
+                $(card).append(buttonRepr);
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Ошибка подписки: ", status, error);
+        }
+    });
+});
