@@ -1,6 +1,11 @@
-<div class="mb-3 comment-item" data-comment-id="{{id}}">
-    <p class="mb-1">{{author}}</p>
-    <p class="mb-1">{{content}}</p>
+<div class="mb-3 comment-item" data-comment-id="{{id}}" data-subcoms="{{subamount}}" data-deleteflag="{{deleteFlag}}">
+    <div class="d-flex justify-content-start">
+        <p class="mb-1 name">{{author}}</p>
+        <div class="comment-icons ml-1"></div>
+    </div>
+    <div class="d-flex commtext-container">
+        <p class="mb-1 comment-text">{{content}}</p>
+    </div>
     <div class="d-flex align-items-baseline">
         <small class="text-muted">{{date}}</small>
         <small class="text-muted mx-2">{{time}}</small>

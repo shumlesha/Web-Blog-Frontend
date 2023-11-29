@@ -40,7 +40,7 @@ $(document).ready(function() {
         //console.log("Clicked");
         var postId = $(this).closest('.like-section').data('post-id');
         var likeIcon = $(this);
-        var isLiked = likeIcon.hasClass('bi-heart-fill');
+        var isLiked = likeIcon.hasClass('bi-heart-fill text-danger');
 
         if (isLiked) {
             $.ajax({
@@ -50,7 +50,7 @@ $(document).ready(function() {
                     'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
                 },
                 success: function() {
-                    likeIcon.removeClass('bi-heart-fill').addClass('bi-heart');
+                    likeIcon.removeClass('bi-heart-fill text-danger').addClass('bi-heart');
                     getPostInfo(postId, function(likes, error) {
                         if (error) {
                             console.error(error);
@@ -72,7 +72,7 @@ $(document).ready(function() {
                     'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
                 },
                 success: function() {
-                    likeIcon.removeClass('bi-heart').addClass('bi-heart-fill');
+                    likeIcon.removeClass('bi-heart').addClass('bi-heart-fill text-danger');
                     getPostInfo(postId, function(likes, error) {
                         if (error) {
                             console.error(error);
@@ -250,7 +250,7 @@ function ParsePosts(queryParams){
                         .replace(/{{commentsCount}}/g, post.commentsCount)
                         .replace(/{{likes}}/g, post.likes)
                         .replace(/{{postId}}/g, post.id)
-                        .replace(/{{likeClass}}/g, post.hasLike===true ? 'bi bi-heart-fill' : 'bi bi-heart');
+                        .replace(/{{likeClass}}/g, post.hasLike===true ? 'bi bi-heart-fill text-danger' : 'bi bi-heart');
 
                     postsContainer.append(card);
                 });
@@ -260,7 +260,7 @@ function ParsePosts(queryParams){
             reBuildPagination(parseInt(data.pagination.current));
         },
         error: function(xhr, status, error) {
-            console.error("Ошибка при получении постов: ", status, error);
+            console.error("Ошибка", status, error);
         }
     });
 }
