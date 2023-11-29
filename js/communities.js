@@ -123,7 +123,7 @@ $(document).on('click', '.subscribe-btn', function(e) {
             });
         },
         error: function(xhr, status, error) {
-            console.error("Ошибка подписки: ", status, error);
+            console.error("Ошибка", status, error);
         }
     });
 });
@@ -153,7 +153,7 @@ $(document).on('click', '.unsubscribe-btn', function(e) {
             });
         },
         error: function(xhr, status, error) {
-            console.error("Ошибка подписки: ", status, error);
+            console.error("Ошибка", status, error);
         }
     });
 });

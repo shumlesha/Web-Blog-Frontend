@@ -52,10 +52,21 @@ $(document).ready(function() {
                 groupSelect.empty();
                 groupSelect.append('<option selected>Без группы</option>');
                 groups.forEach(function(group) {
-                    /*if (group.role === 'Administrator') {
-                        groupSelect.append(`<option value="${group.communityId}">${group.name}</option>`);
-                    }*/
-                    groupSelect.append(`<option value="${group.communityId}">${group.name}</option>`);
+                    if (group.role === 'Administrator') {
+                        $.ajax({
+                            url: `https://blog.kreosoft.space/api/community/${group.communityId}`,
+                            method: 'GET',
+                            contentType: 'application/json',
+                            success: function(commData) {
+                                groupSelect.append(`<option value="${group.communityId}">${commData.name}</option>`);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error("Ошибка", status, error);
+                            }
+                        });
+
+                    }
+                    //groupSelect.append(`<option value="${group.communityId}">${group.name}</option>`);
                 });
             },
             error: function(xhr, status, error) {
@@ -64,7 +75,26 @@ $(document).ready(function() {
         });
     }
 
-    fillUserGroups();
+    if (localStorage.getItem('commId') === null) {
+        fillUserGroups();
+    }
+    else {
+        $.ajax({
+            url: `https://blog.kreosoft.space/api/community/${localStorage.getItem('commId')}`,
+            method: 'GET',
+            contentType: 'application/json',
+            success: function(commData) {
+                var groupSelect = $('#postGroup');
+                groupSelect.empty();
+                groupSelect.append(`<option selected>${commData.name}</option>`);
+            },
+            error: function(xhr, status, error) {
+                console.error("Ошибка", status, error);
+            }
+        });
+
+    }
+
 
 
     function createNewAddressField(label, parentObjectId) {
@@ -165,12 +195,15 @@ $(document).ready(function() {
                 'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
             },
             success: function(postId) {
-                console.log("...", postId);
+                if (localStorage.getItem('commId') !== null) {
+                    localStorage.removeItem('commId');
+                }
             },
             error: function(xhr, status, error) {
                 console.error("...", status, error);
             }
         });
+
     });
 });
 

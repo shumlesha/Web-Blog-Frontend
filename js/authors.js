@@ -43,9 +43,9 @@ $(document).ready(function() {
                             .replace('{{postsText}}', 'Постов: ' + author.posts)
                             .replace('{{likesText}}', 'Лайков: ' + author.likes);
 
-                        if (!crownPath){
+                        //if (!crownPath){
 
-                        }
+                        //}
 
                         var authorCard = $(cardHtml).click(function() {
                             window.location.href = 'http://localhost/?author=' + encodeURIComponent(author.fullName) + '&page=1&size=5';
