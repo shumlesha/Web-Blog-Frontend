@@ -40,10 +40,12 @@
             <div class="form-group">
               <label for="inputFullName">ФИО</label>
               <input type="text" class="form-control" id="inputFullName" placeholder="Иванов Иван Иванович" required>
+              <div class="invalid-feedback">Неверное имя</div>
             </div>
             <div class="form-group">
               <label for="inputBirthDate">Дата рождения</label>
               <input type="date" class="form-control" id="inputBirthDate" required>
+              <div class="invalid-feedback">Неверная дата рождения</div>
             </div>
             <div class="form-group">
               <label for="inputGender">Пол</label>
@@ -51,19 +53,23 @@
                 <option>Мужчина</option>
                 <option>Женщина</option>
               </select>
+              <div class="invalid-feedback">Неверный пол</div>
             </div>
             <div class="form-group">
               <label for="inputPhone">Телефон</label>
               <input type="tel" class="form-control" id="inputPhone" required>
+              <div class="invalid-feedback">Неверный телефон</div>
             </div>
             <div class="form-group">
               <label for="inputEmail">Email</label>
               <input type="email" class="form-control" id="inputEmail" placeholder="name@example.com" required autofocus>
+              <div class="invalid-feedback">Неверный email</div>
               <small class="form-text text-muted">Email будет использоваться для входа в систему</small>
             </div>
             <div class="form-group">
               <label for="inputPassword">Password</label>
               <input type="password" class="form-control" id="inputPassword" required>
+              <div class="invalid-feedback">Неверный пароль</div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
           </form>
@@ -82,6 +88,6 @@
 
 
 
-<script src="../js/registration.js"></script>
+<script type="module" src="../js/registration.js"></script>
 </body>
 </html>
