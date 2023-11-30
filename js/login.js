@@ -31,7 +31,8 @@ $(document).ready(function() {
                   `;
 
                 $('.navbar-nav.ml-auto').html(userDropdown);
-
+                $('.form-control').removeClass('is-invalid');
+                $('.invalid-feedback').empty();
 
                 $('#logoutButton').on('click', function() {
                     localStorage.removeItem('bearerToken');
@@ -60,7 +61,16 @@ $(document).ready(function() {
 
                     }
                 }).join("\n").trim();
-                alert(errorText);
+                //alert(errorText);
+                if (errorText.indexOf("Login failed") > -1) {
+                    $('.form-control').removeClass('is-invalid');
+                    $('.invalid-feedback').empty();
+                    $('#inputEmail').addClass('is-invalid');
+                    $('#inputEmail').next('.invalid-feedback').text('Неверный email');
+                    $('#inputPassword').addClass('is-invalid');
+                    $('#inputPassword').next('.invalid-feedback').text('Неверный пароль');
+                }
+
             }
         });
     });
