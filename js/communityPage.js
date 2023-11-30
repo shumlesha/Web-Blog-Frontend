@@ -444,3 +444,10 @@ function updateSubs(){
 $(document).on('click', '.write-post', function(e) {
     localStorage.setItem( 'commId', commId );
 })
+
+$(document).on('click', '.bi-chat-left-text', function(e) {
+    var postId = $(this).parent().parent().find('.like-section').data('post-id');
+    console.log(postId);
+    localStorage.setItem('scrollFlag', 'true');
+    window.location.href = `http://localhost/post/${postId}`;
+})

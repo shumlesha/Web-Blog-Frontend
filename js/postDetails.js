@@ -48,7 +48,12 @@ $(document).ready(function() {
 
 
                         postsContainer.append(card);
-
+                        console.log('Готовы скроллить');
+                        if (localStorage.getItem('scrollFlag') === 'true'){
+                            console.log('scrolling');
+                            $("#comments-block").get(0).scrollIntoView();
+                            localStorage.removeItem('scrollFlag');
+                        }
 
                     },
                     error: function (error) {
@@ -56,6 +61,7 @@ $(document).ready(function() {
 
                     }
                 });
+
             });
         },
         error: function(error) {
@@ -63,6 +69,9 @@ $(document).ready(function() {
         }
     });
     parseComments(postId);
+
+
+
     $('#postsCol').on('click', '.like-icon', function() {
         //console.log("Clicked");
         var postId = $(this).closest('.like-section').data('post-id');
@@ -116,6 +125,7 @@ $(document).ready(function() {
             });
         }
     });
+
 });
 
 function replaceNav() {
@@ -495,4 +505,12 @@ $(document).on('submit', '#commentary-form', function(e) {
     } else {
         alert('Комментарий не может быть пустым!');
     }
+})
+
+
+$(document).on('click', '.bi-chat-left-text', function(e) {
+    var postId = $(this).parent().parent().find('.like-section').data('post-id');
+    console.log(postId);
+    localStorage.setItem('scrollFlag', 'true');
+    window.location.href = `http://localhost/post/${postId}`;
 })

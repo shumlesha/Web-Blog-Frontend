@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    if (!localStorage.getItem('bearerToken')){
+        window.location.href = 'http://localhost/login';
+    }
+
     var lastGuid = null;
     $('#postAddress').select2({
         allowClear: true,

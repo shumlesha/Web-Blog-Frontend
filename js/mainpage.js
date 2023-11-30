@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    if (localStorage.getItem('bearerToken')) {
+        $('.write-post-button').append('<a class="btn btn-primary" href="http://localhost/post/create">Написать пост</a>')
+    }
+
     replaceNav();
     fillTags();
     ParsePosts(parseUrlOptions());
@@ -41,7 +45,10 @@ $(document).ready(function() {
 
     });
     $('#postsCol').on('click', '.like-icon', function() {
-        //console.log("Clicked");
+        if (!localStorage.getItem('bearerToken')){
+            alert('Нельзя ставить лайк, авторизуйтесь');
+            return false;
+        }
         var postId = $(this).closest('.like-section').data('post-id');
         var likeIcon = $(this);
         var isLiked = likeIcon.hasClass('bi-heart-fill text-danger');
@@ -128,13 +135,13 @@ function getEmail(callback) {
             'Authorization': 'Bearer '+ localStorage.getItem('bearerToken')
         },
         success: function(response) {
-            //console.log(response.email);
             callback(response.email);
         },
         error: function(xhr, status, error) {
-            if (xhr.status === 401){
+            /*if (xhr.status === 401){
                 window.location.href = 'http://localhost/login';
-            }
+            }*/
+            console.log("Nonauthorized");
         }
     });
 }
@@ -318,3 +325,10 @@ function getPostInfo(postId, callback) {
         }
     });
 }
+
+$(document).on('click', '.bi-chat-left-text', function(e) {
+    var postId = $(this).parent().parent().find('.like-section').data('post-id');
+    console.log(postId);
+    localStorage.setItem('scrollFlag', 'true');
+    window.location.href = `http://localhost/post/${postId}`;
+})
