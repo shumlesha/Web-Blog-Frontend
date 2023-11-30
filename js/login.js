@@ -117,7 +117,10 @@ function getEmail(callback) {
             callback(response.email);
         },
         error: function(xhr, status, error) {
-            console.error("Ошибка: ", status, error);
+            if (xhr.status === 401) {
+                localStorage.removeItem('bearerToken');
+                location.reload();
+            }
             callback("");
         }
     });
