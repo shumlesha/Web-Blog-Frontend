@@ -1,4 +1,8 @@
 $(document).ready(function() {
+    if (!localStorage.getItem('bearerToken')){
+        window.location.href = 'http://localhost/login';
+    }
+
     replaceNav();
     $.ajax({
         url: 'https://blog.kreosoft.space/api/community',

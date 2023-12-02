@@ -73,6 +73,10 @@ $(document).ready(function() {
 
 
     $('#postsCol').on('click', '.like-icon', function() {
+        if (!localStorage.getItem('bearerToken')){
+            alert('Нельзя ставить лайк, авторизуйтесь');
+            return false;
+        }
         //console.log("Clicked");
         var postId = $(this).closest('.like-section').data('post-id');
         var likeIcon = $(this);

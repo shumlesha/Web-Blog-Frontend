@@ -37,6 +37,10 @@ $(document).ready(function() {
 
     });
     $('#postsCol').on('click', '.like-icon', function() {
+        if (!localStorage.getItem('bearerToken')){
+            alert('Нельзя ставить лайк, авторизуйтесь');
+            return false;
+        }
         //console.log("Clicked");
         var postId = $(this).closest('.like-section').data('post-id');
         var likeIcon = $(this);
@@ -260,6 +264,10 @@ function ParsePosts(queryParams){
             reBuildPagination(parseInt(data.pagination.current));
         },
         error: function(xhr, status, error) {
+            if (xhr.status === 403){
+                $('#totalPages').val("1");
+                reBuildPagination(parseInt(1));
+            }
             console.error("Ошибка", status, error);
         }
     });
@@ -390,6 +398,7 @@ $(document).on('click', '.subscribe-btn', function(e) {
                 var buttonRepr = buttonPattern.replace(/{{id}}/g, communityId);
                 $(card).append(buttonRepr);
             });
+            location.reload();
         },
         error: function(xhr, status, error) {
             console.error("Ошибка", status, error);
@@ -420,6 +429,7 @@ $(document).on('click', '.unsubscribe-btn', function(e) {
 
                 $(card).append(buttonRepr);
             });
+            location.reload();
         },
         error: function(xhr, status, error) {
             console.error("Ошибка", status, error);

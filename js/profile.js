@@ -1,3 +1,5 @@
+import { profileErrorMessages } from '../js/profileErrorMessages.js';
+
 $(document).ready(function() {
     fillFields();
     $('#profileForm').submit(function (event) {
@@ -17,6 +19,12 @@ $(document).ready(function() {
                 'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
             },
             success: function(response) {
+                for (var key in profileErrorMessages) {
+                    if (profileErrorMessages.hasOwnProperty(key)) {
+                        $('#' + profileErrorMessages[key].id).removeClass('is-invalid');
+                        $('.invalid-feedback').empty();
+                    }
+                }
             },
             error: function(xhr, status, error) {
                 var toJson = JSON.parse(xhr.responseText);
@@ -24,23 +32,19 @@ $(document).ready(function() {
                     toJson = toJson.errors;
                 }
 
-                var errorText = Object.keys(toJson).map(function (key) {
-                    var errors = toJson[key];
-                    //return key + ": " + errors.join(", ");
-                    if (errors == null){
-                        return "";
+                for (var key in profileErrorMessages) {
+                    if (profileErrorMessages.hasOwnProperty(key)) {
+                        $('#' + profileErrorMessages[key].id).removeClass('is-invalid');
+                        $('.invalid-feedback').empty();
                     }
-                    else {
-                        if (Array.isArray(errors)) {
-                            return `key: ${errors.join(", ")}`;
-                        }
-                        else{
-                            return `key: ${errors}`;
-                        }
-
+                }
+                for (var key in toJson) {
+                    if (toJson.hasOwnProperty(key) && profileErrorMessages.hasOwnProperty(key)) {
+                        var field = profileErrorMessages[key];
+                        $('#' + field.id).addClass('is-invalid');
+                        $('#' + field.id).next('.invalid-feedback').text(toJson[key]);
                     }
-                }).join("\n").trim();
-                alert(errorText);
+                }
             }
         });
     });

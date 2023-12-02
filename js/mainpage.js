@@ -138,10 +138,10 @@ function getEmail(callback) {
             callback(response.email);
         },
         error: function(xhr, status, error) {
-            /*if (xhr.status === 401){
-                window.location.href = 'http://localhost/login';
-            }*/
-            console.log("Nonauthorized");
+            //if (xhr.status === 401){
+                //window.location.href = 'http://localhost/login';
+            //}
+            //console.log("Nonauthorized");
         }
     });
 }

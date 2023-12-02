@@ -41,18 +41,21 @@
                             <label for="profileEmail" class="col-sm-3 col-form-label">Email</label>
                             <div class="col-sm-9">
                                 <input type="email" class="form-control" id="profileEmail" placeholder="name@example.com" required>
+                                <div class="invalid-feedback">Неверный email</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="profileFullName" class="col-sm-3 col-form-label">ФИО</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="profileFullName" required>
+                                <div class="invalid-feedback">Неверное имя</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="profilePhone" class="col-sm-3 col-form-label">Номер телефона</label>
                             <div class="col-sm-9">
                                 <input type="tel" class="form-control" id="profilePhone" required>
+                                <div class="invalid-feedback">Неверный телефон</div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -62,12 +65,14 @@
                                     <option value="male">Мужчина</option>
                                     <option value="female">Женщина</option>
                                 </select>
+                                <div class="invalid-feedback">Неверный пол</div>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="profileBirthDate" class="col-sm-3 col-form-label">Дата рождения</label>
                             <div class="col-sm-9">
                                 <input type="date" class="form-control" id="profileBirthDate" required>
+                                <div class="invalid-feedback">Неверная дата рождения</div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -92,6 +97,6 @@
 
 
 
-<script src="../js/profile.js"></script>
+<script type="module" src="../js/profile.js"></script>
 </body>
 </html>
