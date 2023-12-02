@@ -64,8 +64,20 @@ $(document).ready(function() {
 
             });
         },
-        error: function(error) {
-            console.error("Ошибка", error);
+        error: function (xhr, status, error) {
+            if (xhr.status === 403){
+                $.ajax({
+                    url: '../html/warningClosedGroupCard.html',
+                    method: 'GET',
+                    success: function (cardPattern) {
+                        var postsContainer = $('#postsCol');
+                        postsContainer.empty();
+                        postsContainer.append(cardPattern);
+                    }
+                });
+                $('#commentary-form').find('textarea, button').prop('disabled', true);
+                $('#self-comment-text').css('color', 'red').val('Это пост закрытой группы, подпишитесь, чтобы увидеть и прокомментировать пост!');
+            }
         }
     });
     parseComments(postId);
@@ -181,6 +193,9 @@ function getPostLikes(postId, callback) {
         url: `https://blog.kreosoft.space/api/post/${postId}`,
         method: 'GET',
         contentType: 'application/json',
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
+        },
         success: function(data) {
             callback(data.likes);
         },
@@ -210,6 +225,9 @@ function parseComments(postId) {
     $.ajax({
         url: `https://blog.kreosoft.space/api/post/${postId}`,
         method: 'GET',
+        headers: {
+            'Authorization': 'Bearer '+ localStorage.getItem('bearerToken')
+        },
         success: function(data) {
             $('#comments-block').html('<h5 className="card-title">Комментарии</h5>');
             $.get('../html/commentCard.html', function(template) {
