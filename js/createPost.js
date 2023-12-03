@@ -1,3 +1,6 @@
+import {postErrorMessages} from "../js/postErrorMessages.js";
+
+
 $(document).ready(function() {
     if (!localStorage.getItem('bearerToken')){
         window.location.href = 'http://localhost/login';
@@ -202,9 +205,18 @@ $(document).ready(function() {
                 if (localStorage.getItem('commId') !== null) {
                     localStorage.removeItem('commId');
                 }
+                for (var field of postErrorMessages){
+                    $('#' + field).removeClass('is-invalid');
+                }
+                window.location.href = `http://localhost`;
             },
             error: function(xhr, status, error) {
-                console.error("...", status, error);
+                if (xhr.status === 400){
+                    console.log('Показываем ошибки');
+                    for (var field of postErrorMessages) {
+                        $('#' + field).addClass('is-invalid');
+                    }
+                }
             }
         });
 

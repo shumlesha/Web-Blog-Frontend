@@ -1,0 +1,1 @@
+export const postErrorMessages = ["postTitle", "postReadingTime", "postTags", "postText"];

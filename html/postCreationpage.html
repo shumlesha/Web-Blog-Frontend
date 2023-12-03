@@ -48,10 +48,12 @@
             <div class="form-group col-md-8">
                 <label for="postTitle">Название</label>
                 <input type="text" class="form-control" id="postTitle">
+                <div class="invalid-feedback">Введите название</div>
             </div>
             <div class="form-group col-md-4">
                 <label for="postReadingTime">Время чтения</label>
                 <input type="text" class="form-control" id="postReadingTime">
+                <div class="invalid-feedback">Введите время чтения</div>
             </div>
         </div>
         <div class="form-row">
@@ -59,15 +61,13 @@
                 <label for="postGroup">Группа</label>
                 <select id="postGroup" class="form-control">
                     <option selected>Без группы</option>
-                    <option>Стажировка</option>
-                    <option>DevOps</option>
-                    <option>Новости</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label for="postTags">Теги</label>
                 <select multiple id="postTags" class="form-control" size="3">
                 </select>
+                <div class="invalid-feedback">Выберите теги</div>
             </div>
         </div>
         <div class="form-group">
@@ -77,6 +77,7 @@
         <div class="form-group">
             <label for="postText">Текст</label>
             <textarea class="form-control" id="postText" rows="3"></textarea>
+            <div class="invalid-feedback">Заполните текст поста</div>
         </div>
         <div class="form-group">
             <label class="h4 font-weight-normal" for="postAddress">Адрес</label>
@@ -100,6 +101,6 @@
 
 
 
-<script src="../js/createPost.js"></script>
+<script type="module" src="../js/createPost.js"></script>
 </body>
 </html>
