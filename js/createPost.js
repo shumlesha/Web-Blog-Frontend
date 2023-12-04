@@ -157,13 +157,16 @@ $(document).ready(function() {
             url: 'https://blog.kreosoft.space/api/address/search',
             data: { parentObjectId: parentObjectId },
             success: function(data) {
-                if(data.length > 0 && data[0].objectLevel !== "Building") {
+                if(data.length > 0) {
                     var newFieldLabel = data[0].objectLevelText;
 
                     createNewAddressField(newFieldLabel, parentObjectId);
 
                 } else {
                     console.log("Конец");
+                    data.forEach(function(item) {
+                        console.log(item);
+                    })
 
 
                 }
