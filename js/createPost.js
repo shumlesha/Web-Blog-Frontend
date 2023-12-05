@@ -57,7 +57,7 @@ $(document).ready(function() {
             success: function(groups) {
                 var groupSelect = $('#postGroup');
                 groupSelect.empty();
-                groupSelect.append('<option selected>Без группы</option>');
+                groupSelect.append('<option value="null" selected>Без группы</option>');
                 groups.forEach(function(group) {
                     if (group.role === 'Administrator') {
                         $.ajax({
@@ -185,7 +185,7 @@ $(document).ready(function() {
         var image = $('#postImageUrl').val();
         var addressId = lastGuid;
         var tags = $('#postTags').val();
-
+        var id = $('#postGroup').val();
 
         var postData = {
             title: title,
@@ -196,32 +196,63 @@ $(document).ready(function() {
             ...(image && { image: image })
         };
 
-        $.ajax({
-            url: 'https://blog.kreosoft.space/api/post',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(postData),
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
-            },
-            success: function(postId) {
-                if (localStorage.getItem('commId') !== null) {
-                    localStorage.removeItem('commId');
-                }
-                for (var field of postErrorMessages){
-                    $('#' + field).removeClass('is-invalid');
-                }
-                window.location.href = `http://localhost`;
-            },
-            error: function(xhr, status, error) {
-                if (xhr.status === 400){
-                    console.log('Показываем ошибки');
-                    for (var field of postErrorMessages) {
-                        $('#' + field).addClass('is-invalid');
+        if (id === 'null'){
+            $.ajax({
+                url: 'https://blog.kreosoft.space/api/post',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(postData),
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
+                },
+                success: function(postId) {
+                    if (localStorage.getItem('commId') !== null) {
+                        localStorage.removeItem('commId');
+                    }
+                    for (var field of postErrorMessages){
+                        $('#' + field).removeClass('is-invalid');
+                    }
+                    window.location.href = `http://localhost`;
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status === 400){
+                        console.log('Показываем ошибки');
+                        for (var field of postErrorMessages) {
+                            $('#' + field).addClass('is-invalid');
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+        else{
+            $.ajax({
+                url: `https://blog.kreosoft.space/api/community/${id}/post`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(postData),
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('bearerToken')
+                },
+                success: function(postId) {
+                    if (localStorage.getItem('commId') !== null) {
+                        localStorage.removeItem('commId');
+                    }
+                    for (var field of postErrorMessages){
+                        $('#' + field).removeClass('is-invalid');
+                    }
+                    window.location.href = `http://localhost`;
+                },
+                error: function(xhr, status, error) {
+                    if (xhr.status === 400){
+                        console.log('Показываем ошибки');
+                        for (var field of postErrorMessages) {
+                            $('#' + field).addClass('is-invalid');
+                        }
+                    }
+                }
+            });
+        }
+
 
     });
 });
