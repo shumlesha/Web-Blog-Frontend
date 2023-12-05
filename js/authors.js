@@ -30,7 +30,7 @@ $(document).ready(function() {
                         }
                         var pngHtml = "";
                         if (crownPath){
-                            pngHtml = `<img src="${crownPath}" class="position-relative" style="width: 50px; top: -35px; right: 25px; transform: rotate(15deg);" alt="Корона">`
+                            pngHtml = `<img src="${crownPath}" class="position-absolute" style="width: 50px; top: -18px; right: -9px; transform: rotate(15deg);" alt="Корона">`
                             console.log("Есть корона");
                         }
 
