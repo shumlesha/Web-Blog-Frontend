@@ -36,7 +36,7 @@ $(document).ready(function() {
 
                 //alert(errorText);
                 for (var key in errorMessages) {
-                    if (errorMessages.hasOwnProperty(key)) {
+                    if (toJson.hasOwnProperty(key)) {
                         $('#' + errorMessages[key].id).removeClass('is-invalid');
                         $('.invalid-feedback').empty();
                     }

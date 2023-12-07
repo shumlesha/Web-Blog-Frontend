@@ -1,4 +1,5 @@
 import {postErrorMessages} from "../js/postErrorMessages.js";
+import {customPostErrors} from "../js/customPostErrors.js";
 
 
 $(document).ready(function() {
@@ -47,7 +48,7 @@ $(document).ready(function() {
     replaceNav();
     fillTags();
 
-    function fillUserGroups() {
+    function fillUserGroups(groupIndicator) {
         $.ajax({
             url: 'https://blog.kreosoft.space/api/community/my',
             method: 'GET',
@@ -57,7 +58,12 @@ $(document).ready(function() {
             success: function(groups) {
                 var groupSelect = $('#postGroup');
                 groupSelect.empty();
-                groupSelect.append('<option value="null" selected>Без группы</option>');
+                if (!groupIndicator) {
+                    groupSelect.append('<option value="null" selected>Без группы</option>');
+                }
+                else {
+                    groupSelect.append('<option value="null">Без группы</option>');
+                }
                 groups.forEach(function(group) {
                     if (group.role === 'Administrator') {
                         $.ajax({
@@ -65,7 +71,14 @@ $(document).ready(function() {
                             method: 'GET',
                             contentType: 'application/json',
                             success: function(commData) {
-                                groupSelect.append(`<option value="${group.communityId}">${commData.name}</option>`);
+                                if (groupIndicator && localStorage.getItem('commId') === group.communityId) {
+                                    console.log('works')
+                                    groupSelect.append(`<option value="${group.communityId}" selected>${commData.name}</option>`);
+                                }
+                                else{
+                                    console.log('not works');
+                                    groupSelect.append(`<option value="${group.communityId}">${commData.name}</option>`);
+                                }
                             },
                             error: function(xhr, status, error) {
                                 console.error("Ошибка", status, error);
@@ -82,25 +95,10 @@ $(document).ready(function() {
         });
     }
 
-    if (localStorage.getItem('commId') === null) {
+    /*if (localStorage.getItem('commId') === null) {
         fillUserGroups();
-    }
-    else {
-        $.ajax({
-            url: `https://blog.kreosoft.space/api/community/${localStorage.getItem('commId')}`,
-            method: 'GET',
-            contentType: 'application/json',
-            success: function(commData) {
-                var groupSelect = $('#postGroup');
-                groupSelect.empty();
-                groupSelect.append(`<option selected>${commData.name}</option>`);
-            },
-            error: function(xhr, status, error) {
-                console.error("Ошибка", status, error);
-            }
-        });
-
-    }
+    }*/
+    fillUserGroups(localStorage.getItem('commId') !== null);
 
 
 
@@ -216,9 +214,31 @@ $(document).ready(function() {
                 },
                 error: function(xhr, status, error) {
                     if (xhr.status === 400){
-                        console.log('Показываем ошибки');
-                        for (var field of postErrorMessages) {
-                            $('#' + field).addClass('is-invalid');
+                        var toJson = JSON.parse(xhr.responseText);
+                        if (toJson.errors) {
+                            toJson = toJson.errors;
+                        }
+
+                        for (var key of postErrorMessages) {
+                            $('#' + key).removeClass('is-invalid');
+
+                        }
+
+                        if (toJson.model){
+                            console.log('Показываем ошибки');
+                            for (var field of postErrorMessages) {
+                                $('#' + field).addClass('is-invalid');
+                            }
+                        }
+                        else {
+                            for (var key in toJson) {
+                                if (toJson.hasOwnProperty(key) && customPostErrors.hasOwnProperty(key)) {
+                                    var field = customPostErrors[key];
+                                    $('#' + field.id).addClass('is-invalid');
+                                    $('#' + field.id).next('.invalid-feedback').text(toJson[key]);
+                                }
+                            }
+
                         }
                     }
                 }
