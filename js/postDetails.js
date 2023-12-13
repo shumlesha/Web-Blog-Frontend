@@ -188,6 +188,25 @@ function getEmail(callback) {
     });
 }
 
+$(document).on('click', '.continue-read', function(e) {
+    e.preventDefault();
+    var cardText = $(this).closest('.card-text');
+    cardText.find('.preview-text').hide();
+    cardText.find('.full-text').show();
+    //$(this).hide();
+});
+
+$(document).on('click', '.hide-text', function(e) {
+    e.preventDefault();
+    var cardText = $(this).closest('.card-text');
+    cardText.find('.full-text').hide();
+    cardText.find('.preview-text').show();
+
+    //$(this).hide();
+})
+
+
+
 function getPostLikes(postId, callback) {
     $.ajax({
         url: `https://blog.kreosoft.space/api/post/${postId}`,
