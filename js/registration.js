@@ -50,6 +50,8 @@ $(document).ready(function() {
                 }
             }
         });
+        // move to mainpage
+        window.location.href = 'http://localhost/';
     });
 
 });
